@@ -17,7 +17,7 @@
   * **PlatformIO** C++ for firmware, and eventually Python (matplotlib / PyQt) on the laptop side for graphing streamed data
 
 * **Inputs/Outputs of the project:**
-  * **Inputs:** Raw accelerometer and gyroscope data from the MPU6050 over I2C, the user physically performing curls while wearing the device.
+  * **Inputs:** Raw accelerometer and gyroscope data from the MPU6050 over I2C, the user performing curls while wearing the device.
   * **Outputs:** Real-time rep count and form feedback on the LCD/OLED, vibration pulses from the motor when a curl is performed too fast or with bad form, and (planned) a serial/Bluetooth data stream to a laptop for graphing rep statistics.
 
 * **Features:** The device reads motion data from the IMU, detects each curl using a simple state machine, and flags reps that are too fast or sloppy. When that happens, the vibration motor buzzes your forearm so you know to slow down, and the LCD keeps a running count of your reps. The battery input has reverse-polarity protection so a flipped battery won't fry anything. Down the line I want to add live data streaming to a laptop, per-set logging, and a 3D-printed case with a Velcro strap so it's actually wearable at the gym.
@@ -40,14 +40,7 @@ The schematic below shows the current circuit: an ESP32 dev module communicating
 <img width="830" height="842" alt="image" src="https://github.com/user-attachments/assets/018fee66-cf24-4c73-bc0f-7035d48fece7" />
 
 ### Description
-The current physical prototype is a hand-soldered protoboard with the ESP32 dev module, the MPU6050 breakout, the vibration motor driver circuit (NPN transistor, base resistor, flyback diode), and a connector header for the OLED display. Power is provided by a 3xAA battery pack routed through a Schottky diode for reverse-polarity protection. The OLED currently displays raw accelerometer (g) and gyroscope (deg/s) values from the MPU6050 for sanity checking — this will be replaced with the rep counter and form feedback once that firmware module is finished.
-
-## Current Progress
-
-* IMU is wired up and reading clean accelerometer + gyroscope data over I2C, displayed live on the OLED for verification.
-* Vibration motor driver circuit is built on the protoboard with proper flyback diode protection, and the ESP32 successfully triggers the motor when a fast movement is detected via a simple acceleration-magnitude threshold.
-* Battery power with reverse-polarity protection (Schottky diode) is working, so the device can run untethered.
-* KiCad schematic is captured for the current circuit and will be the basis for a future PCB revision.
+The current physical prototype is a hand-soldered protoboard with the ESP32, the MPU6050, the vibration motor driver circuit (NPN transistor, base resistor, flyback diode), and a connector header for the OLED display. Power is provided by a 3xAA battery pack routed through a Schottky diode for reverse-polarity protection. The OLED currently displays raw accelerometer (g) and gyroscope (deg/s) values from the MPU6050 for testing (will be replaced with actual data later on).
 
 ## Roadmap / Planned Work
 
