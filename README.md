@@ -22,7 +22,7 @@ This was the first iteration of Curl Tracker, soldered on a perfboard. I powered
 
 <br> 
 
-This was the second iteration of Curl Tracker, now with powered through a 3.7V LiPo battery. I connected it with a TP4056 Charge Module so that I could charge the Lipo battery through USB C. It also includes overcharge protection for the Lipo battery. I soldered a mechanical switch to the ground of the TP4056 Charge Module for an easy On-Off switch. This greatly reduced the weight caused by the 3 AA batteries. 
+This was the second iteration of Curl Tracker, now powered through a 3.7V LiPo battery. I connected it with a TP4056 Charge Module so that I could charge the Lipo battery through USB C. It also includes overcharge protection for the Lipo battery. I soldered a mechanical switch to the ground of the TP4056 Charge Module for an easy On-Off switch. This greatly reduced the weight caused by the 3 AA batteries. 
 
 <img width="1659" height="1993" alt="IMG_3801" src="https://github.com/user-attachments/assets/58b5fa50-1344-4bb1-bcdc-7f2f331b18c1" />
 
