@@ -28,7 +28,7 @@ This was the second iteration of Curl Tracker, now powered through a 3.7V LiPo b
 
 <br> 
 
-This was the first design for the case of Curl Tracker, made through Autodesk Fusion. This is just a proof of concept so that I could get a feel for how the final design could look in real-life. This was way too bulky, with the walls too thick and tall. It also had no holes for the TP4056 Charge Module and ESP32 programming USB C ports. 
+This was the first design for the case of Curl Tracker, made through Autodesk Fusion. This was just a proof of concept so that I could get a feel for how the final design could look in real-life. This was way too bulky, with the walls too thick and tall. It also had no holes for the TP4056 Charge Module and ESP32 programming USB C ports. 
 
 ## Current Build
 
