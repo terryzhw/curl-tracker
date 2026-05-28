@@ -40,8 +40,7 @@ I soldered the MPU6050 and the SH1106 OLED Display to a separate perfboard and s
 
 
 <br>
-<br>
-<br>
+
 
 ## Plans
 
