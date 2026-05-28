@@ -39,8 +39,16 @@ This was the first design for the case of Curl Tracker, made through Autodesk Fu
 I soldered the MPU6050 and the SH1106 OLED Display to a separate perfboard and soldered the connections for a more permanent build. This gives more stability for the MPU6050 which needs to be in the correct orientation for accurate readings. 
 
 
+<br>
+<br>
+<br>
 
+## Plans
 
+- I plan to implement the MQTT protocol using Mosquitto to send data to a laptop/app for graphing and analysis.
+- I plan to fully design the enclosure for Curl Tracker with Autodesk Fusion.
+
+<br>
 
 ## Installation / Usage
 
