@@ -6,11 +6,10 @@ Curl Tracker is a wearable bicep curl tracker that uses an ESP32 Dev Board to re
 
 ## Hardware Schematic
 
-<img width="841" height="595" alt="image" src="https://github.com/user-attachments/assets/8ccb8f25-5bf7-4c0c-804f-a77c5d467243" />
+<img width="841" height="595" alt="image" src="https://github.com/user-attachments/assets/5bfdad15-53f5-40b0-b6fe-33af3e4ae0b7" />
 
 
-
-This is the intial schematic of Curl Tracker, made through KiCad. The main highlight of the schematic is the flyback diode for the DC motor to protect against voltage spikes when the power is turned off. After creating the schematic, I verified the design by creating a prototype on a breadboard. 
+This is the intial schematic of Curl Tracker, made through KiCad. The main highlight of the schematic is the flyback diode circuit for the DC motor to protect against voltage spikes when the power is turned off. After creating the schematic, I verified the design by creating a prototype on a breadboard. 
 
 ## Past Builds
 
