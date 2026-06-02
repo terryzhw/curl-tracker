@@ -6,7 +6,7 @@ Curl Tracker is a wearable bicep curl tracker that uses an ESP32 Dev Board to re
 
 ## Hardware Schematic
 
-<img width="3508" height="2480" alt="image" src="https://github.com/user-attachments/assets/dcc8c559-3610-4380-84c2-0a6803972121" />
+<img width="841" height="595" alt="image" src="https://github.com/user-attachments/assets/8ccb8f25-5bf7-4c0c-804f-a77c5d467243" />
 
 
 
