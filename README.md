@@ -5,7 +5,8 @@
 Curl Tracker is a wearable bicep curl tracker that uses an ESP32 Dev Board to read MPU6050 IMU data through I²C. It displays rep data through a SH1106 OLED display and transmits curl metrics over MQTT (Mosquitto). Curl Tracker includes a vibration motor for haptic feedback based on rep speed and curl form. 
 
 ## State Machine
-<img width="1" height="1" alt="image" src="https://github.com/user-attachments/assets/bccca7d2-2131-49b5-8a33-95defc3ed4c1" />
+
+<img width="780" height="240" alt="image" src="https://github.com/user-attachments/assets/605a81e7-1da9-4a83-ad5c-55fa8731ea83" />
 
 <br>
 
