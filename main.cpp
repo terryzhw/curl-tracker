@@ -3,7 +3,7 @@
 #include <MPU6050.h>
 #include <U8g2lib.h>
 
-// SSD1306 128x64 OLED via I2C, SDA=21, SCL=22
+// SSD1306 128x64 OLED via I2C (SDA=21, SCL=22)
 U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
 
 MPU6050 mpu;
@@ -12,7 +12,6 @@ MPU6050 mpu;
 #define MOTOR_CH    0       // LEDC channel
 #define MOTOR_FREQ  1000    // Hz
 #define MOTOR_RES   8       // 8-bit resolution (0-255)
-
 
 unsigned long prevTime = 0;
 const float ALPHA = 0.90;
@@ -32,7 +31,7 @@ enum ArmState {
 
 ArmState armState = ARM_DOWN;
 
-// Vibrate at given strength 0=off, 255-full for durationMs
+// Vibrate at given strength (0=off, 255=full) for durationMs
 void vibrate(uint8_t strength, uint32_t durationMs) {
     ledcWrite(MOTOR_CH, strength);
     delay(durationMs);
@@ -51,6 +50,7 @@ void detectRep(const float upThresh, const float downThresh) {
 
 void countSets() {
     if (rep >= 8) {
+        rep = 0;
         set++;
         vibrate(220,100);
         delay(100);
@@ -121,16 +121,17 @@ void loop() {
 
     char buf[32];
     u8g2.clearBuffer();
-    u8g2.drawStr(2, 24, "Reps: ");
+    u8g2.drawStr(2, 12, "Reps: ");
+    snprintf(buf, sizeof(buf), "%d", rep);
+    u8g2.drawStr(40, 12, buf);
+    u8g2.drawStr(2, 28, "Sets: ");
+    snprintf(buf, sizeof(buf), "%d", set);
+    u8g2.drawStr(40, 28, buf);
+    u8g2.drawStr(2, 44, "Angle: ");
     snprintf(buf, sizeof(buf), "%.1f", angle);
-    u8g2.drawStr(2, 34, buf);
+    u8g2.drawStr(45, 44, buf);
     u8g2.sendBuffer();
 
-    // magnitude of accelerometer 
-    // float speed = sqrt(axG*axG + ayG*ayG + azG*azG);                                                  
-    // if (speed > 2.0f) {                                                                               
-    //   vibrate(220, 80); 
-    // }
 
     float upThresh   = baselineAngle + UP_OFFSET;
     float downThresh = baselineAngle + DOWN_OFFSET;
@@ -140,5 +141,7 @@ void loop() {
 
 
  }
+
+
 
 
