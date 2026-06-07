@@ -45,14 +45,13 @@ This was the second iteration of Curl Tracker, now powered through a 3.7V LiPo b
 
 <br>
 
-I soldered the MPU6050 and the SH1106 OLED Display to a separate perfboard and soldered the connections for a more permanent build. This gives more stability for the MPU6050 which needs to be in the correct orientation for accurate readings. 
+This was the first design for the case of Curl Tracker, made through Autodesk Fusion. This was just a proof of concept so that I could get a feel for how the final design could look in real-life. This was way too bulky, with the walls too thick and tall. It also had no holes for the TP4056 Charge Module and ESP32 programming USB C ports. 
+
 
 <img width="6048" height="4270" alt="IMG_3867" src="https://github.com/user-attachments/assets/69bd071e-0a1e-49c7-9299-3584332e1c1a" />
 <br> 
 
-This was the first design for the case of Curl Tracker, made through Autodesk Fusion. This was just a proof of concept so that I could get a feel for how the final design could look in real-life. This was way too bulky, with the walls too thick and tall. It also had no holes for the TP4056 Charge Module and ESP32 programming USB C ports. 
-
-
+I soldered the MPU6050 and the SH1106 OLED Display to a separate perfboard and soldered the connections for a more permanent build. This gives more stability for the MPU6050 which needs to be in the correct orientation for accurate readings. 
 
 <br>
 
