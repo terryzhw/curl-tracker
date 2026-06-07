@@ -4,6 +4,14 @@
 
 Curl Tracker is a wearable bicep curl tracker that uses an ESP32 Dev Board to read MPU6050 IMU data through I²C. It displays rep data through a SH1106 OLED display and transmits curl metrics over MQTT (Mosquitto). Curl Tracker includes a vibration motor for haptic feedback based on rep speed and curl form. 
 
+## Final Prototype Design
+
+<img width="2765" height="2511" alt="IMG_3898" src="https://github.com/user-attachments/assets/0c6abf21-9ea8-4c4c-b2a8-be061c439d5b" />
+
+Heres the final prototype build for Curl Tracker. I caded the enclosure and lid, including the USB-C holes, hole for the OLED, hole for the mechanical switch, and a snap-fit design for the lid. There is also handles on the side to attach a velcro strap to attach Curl Tracker to the forearm. 
+
+<br>
+
 ## State Machine
 
 <img width="780" height="240" alt="image" src="https://github.com/user-attachments/assets/605a81e7-1da9-4a83-ad5c-55fa8731ea83" />
@@ -35,17 +43,15 @@ This was the second iteration of Curl Tracker, now powered through a 3.7V LiPo b
 
 <img width="1659" height="1993" alt="IMG_3801" src="https://github.com/user-attachments/assets/58b5fa50-1344-4bb1-bcdc-7f2f331b18c1" />
 
+<br>
+
+I soldered the MPU6050 and the SH1106 OLED Display to a separate perfboard and soldered the connections for a more permanent build. This gives more stability for the MPU6050 which needs to be in the correct orientation for accurate readings. 
+
+<img width="6048" height="4270" alt="IMG_3867" src="https://github.com/user-attachments/assets/69bd071e-0a1e-49c7-9299-3584332e1c1a" />
 <br> 
 
 This was the first design for the case of Curl Tracker, made through Autodesk Fusion. This was just a proof of concept so that I could get a feel for how the final design could look in real-life. This was way too bulky, with the walls too thick and tall. It also had no holes for the TP4056 Charge Module and ESP32 programming USB C ports. 
 
-## Current Build
-
-<img width="6048" height="4270" alt="IMG_3867" src="https://github.com/user-attachments/assets/69bd071e-0a1e-49c7-9299-3584332e1c1a" />
-
-<br>
-
-I soldered the MPU6050 and the SH1106 OLED Display to a separate perfboard and soldered the connections for a more permanent build. This gives more stability for the MPU6050 which needs to be in the correct orientation for accurate readings. 
 
 
 <br>
@@ -53,8 +59,7 @@ I soldered the MPU6050 and the SH1106 OLED Display to a separate perfboard and s
 
 ## Plans
 
-- I plan to implement the MQTT protocol using Mosquitto to send data to a laptop/app for graphing and analysis.
-- I plan to fully design the enclosure for Curl Tracker with Autodesk Fusion.
+- I plan to make a PCB of the design through KiCad and send it for manufacturing.
 
 <br>
 
