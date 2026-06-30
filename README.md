@@ -12,21 +12,6 @@ Heres the final prototype build for Curl Tracker. I caded the enclosure and lid,
 
 <br>
 
-## State Machine
-
-<img width="780" height="240" alt="image" src="https://github.com/user-attachments/assets/605a81e7-1da9-4a83-ad5c-55fa8731ea83" />
-
-<br>
-
-Simple state machine showing how reps are counted for Curl Tracker.
-
-## Hardware Schematic
-
-<img width="1048" height="720" alt="image" src="https://github.com/user-attachments/assets/4b443dde-6515-4ee3-806c-5ae9223b752c" />
-
-
-This is the intial schematic of Curl Tracker, made through KiCad. I added a flyback protection circuit to prevent sudden voltage spikes caused by the haptic DC motor. I also included a MCP1700-3302E voltage regulator to step down the 3.7V LiPo Battery to 3.3V. After creating the schematic, I verified the design by creating a prototype on a breadboard. 
-
 ## Past Builds
 
 <img width="830" height="842" alt="image" src="https://github.com/user-attachments/assets/018fee66-cf24-4c73-bc0f-7035d48fece7" />
@@ -52,13 +37,6 @@ This was the first design for the case of Curl Tracker, made through Autodesk Fu
 <br> 
 
 I soldered the MPU6050 and the SH1106 OLED Display to a separate perfboard and soldered the connections for a more permanent build. This gives more stability for the MPU6050 which needs to be in the correct orientation for accurate readings. 
-
-<br>
-
-
-## Plans
-
-- I plan to make a PCB of the design through KiCad and send it for manufacturing.
 
 <br>
 
