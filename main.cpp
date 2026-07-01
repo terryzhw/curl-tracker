@@ -3,15 +3,15 @@
 #include <MPU6050.h>
 #include <U8g2lib.h>
 
-// SSD1306 128x64 OLED via I2C (SDA=21, SCL=22)
+// SSD1106 128x64 OLED via I2C (SDA=21, SCL=22)
 U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
 
 MPU6050 mpu;
 
 #define MOTOR_PIN   25
-#define MOTOR_CH    0       // LEDC channel
-#define MOTOR_FREQ  1000    // Hz
-#define MOTOR_RES   8       // 8-bit resolution (0-255)
+#define MOTOR_CH    0       
+#define MOTOR_FREQ  1000    
+#define MOTOR_RES   8       
 
 unsigned long prevTime = 0;
 const float ALPHA = 0.90;
