@@ -1,146 +1,172 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include <MPU6050.h>
-#include <U8g2lib.h>
+#include <math.h>
 
-// SSD1106 128x64 OLED via I2C (SDA=21, SCL=22)
-U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
+#include "mpu6500.h"
+#include <U8x8lib.h>
 
-MPU6050 mpu;
+#define I2C_SDA 8
+#define I2C_SCL 9
 
-#define MOTOR_PIN   25
-#define MOTOR_CH    0       
-#define MOTOR_FREQ  1000    
-#define MOTOR_RES   8       
+#define ledPin 10
 
-unsigned long prevTime = 0;
-const float ALPHA = 0.90;
-float angle = 0.0f;
-float baselineAngle = 0.0f;
+#define buttonPin 4
 
-const float UP_OFFSET = 40.0f;
-const float DOWN_OFFSET = 15.0f;
+#define motorPin 3
+#define motorChannel 0
+#define motorFrequency 1000
+#define motorResolution 8
 
-int rep = 0; 
-int set = 0;
 
-enum ArmState {
-    ARM_DOWN,
-    ARM_UP
-};
 
-ArmState armState = ARM_DOWN;
+// Complementary filter coefficient (0-1), higher = trust gyro more (smooth, less accel noise), lower = trust accel more (less drift)
 
-// Vibrate at given strength (0=off, 255=full) for durationMs
-void vibrate(uint8_t strength, uint32_t durationMs) {
-    ledcWrite(MOTOR_CH, strength);
-    delay(durationMs);
-    ledcWrite(MOTOR_CH, 0);
-}
+static constexpr float ALPHA = 0.90f;
 
-void detectRep(const float upThresh, const float downThresh) {
-    if (armState == ARM_DOWN && angle > upThresh) {
-        armState = ARM_UP;
-    } else if (armState == ARM_UP && angle < downThresh) {
-     armState = ARM_DOWN;
-     rep++;
-     vibrate(220, 100);
+// Sample rate: 1000 / (1 + SRD) Hz. SRD=9 -> 100 Hz.
+static constexpr uint8_t SAMPLE_RATE_DIV = 9;
+static constexpr float DT = (1.0f + SAMPLE_RATE_DIV) / 1000.0f;  
+
+bfs::Mpu6500 mpu6500(&Wire, bfs::Mpu6500::I2C_ADDR_PRIM);
+U8X8_SSD1306_128X64_NONAME_HW_I2C oled(U8X8_PIN_NONE);
+
+float roll = 0.0f;
+bool filterInitialized = false;
+
+int reps = 0;
+int sets = 0;
+
+int isPressed = 1;
+
+
+
+
+void taskSampleIMU(void *pvParameters) {
+  Serial.println("IMU task started, calling Begin()...");
+  if (!mpu6500.Begin()) {
+    Serial.println("Error starting IMU");
+    vTaskDelete(NULL);
+    return;
+  }
+  Serial.println("IMU initialized OK");
+
+  mpu6500.ConfigAccelRange(bfs::Mpu6500::ACCEL_RANGE_4G);
+  mpu6500.ConfigGyroRange(bfs::Mpu6500::GYRO_RANGE_500DPS);
+  mpu6500.ConfigDlpfBandwidth(bfs::Mpu6500::DLPF_BANDWIDTH_20HZ);
+  mpu6500.ConfigSrd(SAMPLE_RATE_DIV);
+
+  for (;;) {
+    if (mpu6500.Read()) {
+      float ax = mpu6500.accel_x_mps2();
+      float ay = mpu6500.accel_y_mps2();
+      float az = mpu6500.accel_z_mps2();
+
+      float gx = mpu6500.gyro_x_radps();
+
+      float accelRoll = atan2f(ay, -az) * (180.0f / M_PI);
+
+      if (!filterInitialized) {
+        roll = accelRoll;
+        filterInitialized = true;
+      } else {
+        // Complementary filter
+        roll = ALPHA * (roll + gx * (180.0f / M_PI) * DT)
+             + (1.0f - ALPHA) * accelRoll;
+      }
+
+      Serial.print("Roll: ");
+      Serial.print(roll, 1);
+      Serial.println(" deg");
     }
+
+    vTaskDelay(pdMS_TO_TICKS(10));
+  }
 }
 
-void countSets() {
-    if (rep >= 8) {
-        rep = 0;
-        set++;
-        vibrate(220,100);
-        delay(100);
-        vibrate(220,100);
+void taskDisplayOLED(void *pvParameters) {
+
+  oled.begin();
+  oled.setFlipMode(0);
+
+  oled.setFont(u8x8_font_chroma48medium8_r);
+
+  oled.inverse();
+  oled.setCursor(2,0);
+  oled.print("CURL TRACKER");
+  oled.noInverse();
+
+  for(;;) {
+    oled.setCursor(0,2);
+    oled.print("REPS:");
+    oled.setCursor(5,2);
+    oled.print(reps, 1);
+
+    oled.setCursor(0,4);
+    oled.print("SETS:");
+    oled.setCursor(5,4);
+    oled.print(sets, 1);
+
+    oled.setCursor(0,6);
+    oled.print("ANGLE:");
+    oled.setCursor(6,6);
+    oled.print(roll, 1);
+
+    oled.setCursor(9,2);
+    oled.print("MQTT:OK");
+
+    vTaskDelay(pdMS_TO_TICKS(50));
+  }
+}
+
+void taskSampleButton(void *pvParameters) {
+
+  pinMode(buttonPin, INPUT_PULLUP);
+  pinMode(ledPin, OUTPUT);
+
+  for (;;) {
+    isPressed = digitalRead(buttonPin);
+
+
+    if (isPressed == HIGH) {
+      digitalWrite(ledPin, LOW);
+    } else {
+      digitalWrite(ledPin, HIGH);
     }
+
+    vTaskDelay(pdMS_TO_TICKS(20));
+  }
 }
 
+void taskVibrateMotor(void *pvParamters) {
+
+  ledcSetup(motorChannel, motorFrequency, motorResolution);
+  ledcAttachPin(motorPin, motorChannel);
+  ledcWrite(motorChannel, 0);
+
+  for(;;) {
+    if (isPressed == LOW) {
+      ledcWrite(motorChannel, 220);
+      vTaskDelay(pdMS_TO_TICKS(20));
+      ledcWrite(motorChannel, 0);
+    }
+    vTaskDelay(pdMS_TO_TICKS(20));
+  }
+}
 
 void setup() {
-    Serial.begin(115200);
-    Wire.begin();
-
-    prevTime = micros();
-
-    // Motor PWM setup
-    ledcSetup(MOTOR_CH, MOTOR_FREQ, MOTOR_RES);
-
-    ledcAttachPin(MOTOR_PIN, MOTOR_CH);
-    ledcWrite(MOTOR_CH, 0);
-
-    u8g2.begin();
-    u8g2.setFont(u8g2_font_5x7_tr);
-
-    mpu.initialize();
-    if (!mpu.testConnection()) {
-        u8g2.clearBuffer();
-        u8g2.drawStr(0, 10, "MPU6050 FAIL");
-        u8g2.sendBuffer();
-        while (true);
-    }
-
-    prevTime = micros();
-    for (int i=0; i<200; i++) {
-        int16_t ax, ay, az, gx, gy, gz;
-        mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
-
-        // Convert raw to g and degs
-        float axG = ax / 16384.0f;
-        float azG = az / 16384.0f;
-        float gyD = gy / 131.0f;
-        float accelPitch = atan2(axG, azG) * (180.0f/PI);
-        unsigned long currTime = micros();
-        float dt = (currTime - prevTime) / 1000000.0f;
-        prevTime = currTime;
-        angle = (ALPHA * (angle + gyD * dt) + (1-ALPHA) * accelPitch);
-        delay(5);
-    }
-
-    baselineAngle = angle;
-
+  Serial.begin(9600);
+  Wire.begin(I2C_SDA, I2C_SCL);
+  Wire.setClock(400000);
+  xTaskCreate(taskSampleIMU, "sampleIMU", 2048, NULL, 1, NULL);
+  xTaskCreate(taskDisplayOLED, "displayOLED", 2048, NULL, 1, NULL);
+  xTaskCreate(taskSampleButton, "sampleButton", 2048, NULL, 1, NULL);
+  xTaskCreate(taskVibrateMotor, "vibrateMotor", 2048, NULL, 1, NULL);
 }
 
 void loop() {
-    int16_t ax, ay, az, gx, gy, gz;
-    mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+  vTaskDelay(pdMS_TO_TICKS(1000));
+}
 
-    // Convert raw to g and degs
-    float axG = ax / 16384.0f;
-    float ayG = ay / 16384.0f;
-    float azG = az / 16384.0f;
-    float gyD = gy / 131.0f;
-    // Complementary filter
-    float accelPitch = atan2(axG, azG) * (180.0f/PI);
-    unsigned long currTime = micros();
-    float dt = (currTime - prevTime) / 1000000.0f;
-    prevTime = currTime;
-    angle = (ALPHA * (angle + gyD * dt) + (1-ALPHA) * accelPitch);
-
-    char buf[32];
-    u8g2.clearBuffer();
-    u8g2.drawStr(2, 12, "Reps: ");
-    snprintf(buf, sizeof(buf), "%d", rep);
-    u8g2.drawStr(40, 12, buf);
-    u8g2.drawStr(2, 28, "Sets: ");
-    snprintf(buf, sizeof(buf), "%d", set);
-    u8g2.drawStr(40, 28, buf);
-    u8g2.drawStr(2, 44, "Angle: ");
-    snprintf(buf, sizeof(buf), "%.1f", angle);
-    u8g2.drawStr(45, 44, buf);
-    u8g2.sendBuffer();
-
-
-    float upThresh   = baselineAngle + UP_OFFSET;
-    float downThresh = baselineAngle + DOWN_OFFSET;
-
-    detectRep(upThresh, downThresh);
-    countSets();
-
-
- }
 
 
 
