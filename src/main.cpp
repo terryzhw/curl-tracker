@@ -5,6 +5,8 @@
 #include "mpu6500.h"
 #include <U8x8lib.h>
 
+#include "model.h"
+
 #define I2C_SDA 8
 #define I2C_SCL 9
 
@@ -16,8 +18,6 @@
 #define motorChannel 0
 #define motorFrequency 1000
 #define motorResolution 8
-
-
 
 // Complementary filter coefficient (0-1), higher = trust gyro more (smooth, less accel noise), lower = trust accel more (less drift)
 
@@ -168,6 +168,78 @@ void taskVibrateMotor(void *pvParamters) {
   }
 }
 
+// Direct neural network inference for rep counting (no TFLite needed)
+static float win_roll[MODEL_WINDOW_SIZE];
+static float win_pitch[MODEL_WINDOW_SIZE];
+static int win_idx = 0;
+static bool win_full = false;
+
+static inline float relu(float x) { return x > 0.0f ? x : 0.0f; }
+
+static constexpr int INPUT_SIZE = MODEL_WINDOW_SIZE * 2;
+
+static float runModel(const float *input) {
+  // Layer 0: Dense(INPUT_SIZE → 16, relu)
+  float h0[16];
+  for (int j = 0; j < 16; j++) {
+    float sum = BIAS0[j];
+    for (int i = 0; i < INPUT_SIZE; i++) sum += input[i] * WEIGHT0[i * 16 + j];
+    h0[j] = relu(sum);
+  }
+  // Layer 1: Dense(16 → 8, relu)
+  float h1[8];
+  for (int j = 0; j < 8; j++) {
+    float sum = BIAS1[j];
+    for (int i = 0; i < 16; i++) sum += h0[i] * WEIGHT1[i * 8 + j];
+    h1[j] = relu(sum);
+  }
+  // Layer 2: Dense(8 → 1, sigmoid)
+  float sum = BIAS2[0];
+  for (int i = 0; i < 8; i++) sum += h1[i] * WEIGHT2[i];
+  return 1.0f / (1.0f + expf(-sum));
+}
+
+void taskInference(void *pvParameters) {
+  bool was_curling = false;
+  int step_count = 0;
+
+  while (!filterInitialized) vTaskDelay(pdMS_TO_TICKS(100));
+
+  for (;;) {
+    win_roll[win_idx]  = roll;
+    win_pitch[win_idx] = pitch;
+    win_idx++;
+    if (win_idx >= MODEL_WINDOW_SIZE) {
+      win_full = true;
+      win_idx  = 0;
+    }
+
+    step_count++;
+
+    if (win_full && step_count >= 5) {
+      step_count = 0;
+
+      // Normalize and flatten into (INPUT_SIZE,) input
+      float input[INPUT_SIZE];
+      for (int i = 0; i < MODEL_WINDOW_SIZE; i++) {
+        int ri = (win_idx + i) % MODEL_WINDOW_SIZE;
+        input[i * 2 + 0] = (win_roll[ri]  - NORM_MIN[0]) / (NORM_MAX[0] - NORM_MIN[0] + 1e-7f);
+        input[i * 2 + 1] = (win_pitch[ri] - NORM_MIN[1]) / (NORM_MAX[1] - NORM_MIN[1] + 1e-7f);
+      }
+
+      float prob = runModel(input);
+      bool is_curling = prob > 0.5f;
+
+      if (is_curling && !was_curling) {
+        reps++;
+      }
+      was_curling = is_curling;
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(10));
+  }
+}
+
 // Toggle for data collection
 void taskSerialControl(void *pvParameters) {
   for (;;) {
@@ -195,6 +267,7 @@ void setup() {
   xTaskCreate(taskSampleButton, "sampleButton", 2048, NULL, 1, NULL);
   xTaskCreate(taskVibrateMotor, "vibrateMotor", 2048, NULL, 1, NULL);
   xTaskCreate(taskSerialControl, "serialCtrl", 2048, NULL, 1, NULL);
+  xTaskCreate(taskInference, "inference", 8192, NULL, 1, NULL);
 }
 
 void loop() {

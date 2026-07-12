@@ -1,2 +1,5 @@
 .pio
 .vscode
+data.csv
+.DS_Store
+norm_params.npz
