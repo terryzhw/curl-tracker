@@ -15,7 +15,7 @@ Feedback is handled by the status LED for the device state, the OLED is display 
 
 ## KiCad Schematic & PCB layout 
 
-<img width="3508" height="2480" alt="image" src="https://github.com/user-attachments/assets/b4e385a7-e2e7-48c1-a7b7-e0c9fdc8c3de" />
+![schematic_image](curl_tracker.svg)
 
 
 ## Installation / Usage
