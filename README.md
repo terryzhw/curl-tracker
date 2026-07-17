@@ -7,17 +7,19 @@ Curl Tracker is a wearable bicep curl tracker that uses an ESP32-C3 Super Mini a
 ## Breadboard Prototype
 ![Curl Tracker breadboard prototype](curl_tracker_breadboard.jpg)
 
-A 3.7V LiPo battery (range: 3.0V - 4.2V) is charged by a TP4056 module which also has overcharge protection. A mechanical switch is used as a on/off switch. The MT3608 converts the noisy 3.7V LiPo, which can have varying voltage depending on the charge, to a stable 5V. 
+### Design Choices:
 
-The ESP32-C3 Super Mini is the MCU which serves as the brain for the project. The MPU-6500 IMU and SSD1306 OLED share a I2C bus which the ESP32 uses. The push button is used to provide the data-collection input used to label reps while gathering training data for the classifier. 
+- Power: 3.7V LiPo (range: 3.0V - 4.2V) with a TP4056 module for charging managment. MT3608 module converts the varying 3.7V Lipo to a stable 5V source. A mechanical switch is used as a on/off switch. 
 
-Feedback is handled by the status LED for the device state, the OLED is display rep count/sets/roll angle/and status of the MQTT, the vibration motor is used for haptic feedback. The flyback diode circuit helps protect against back-EMF when the motor turns off, protecting the ESP32. 
+- MCU & Peripherals: ESP32-C3 Super Mini is the MCU that serves as the brain for the project. MPU-6500 IMU and SSD1306 share a I2C bus which the ESP32 uses to communicate. A push button is used to provide data collection input to label reps while gathering training data for the classifier.
+
+- Feedback: A status LED exists which turns on if any of the electronic malfunction. The OLED displays rep count, sets, and status of MQTT. The vibration motor, paired with a flyback diode circuit for back-EMF protection, is used for haptic feedback.
 
 ## KiCad Schematic & PCB layout 
 
 ![schematic](curl_tracker.svg)
 
-###Design Choices: 
+### Design Choices: 
 
 - 
 
