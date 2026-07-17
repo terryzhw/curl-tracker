@@ -6350,6 +6350,12 @@
 		(uuid "24c348f1-4763-4d32-b188-89277b2867be")
 	)
 	(junction
+		(at 22.86 24.13)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2dd33221-af56-430a-b830-2f5a1f947342")
+	)
+	(junction
 		(at 35.56 41.91)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6510,6 +6516,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d47dca09-ebca-4c6f-970d-d5179fd897bb")
+	)
+	(junction
+		(at 63.5 41.91)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d5902743-4cd7-4ac3-96b6-92c2acf0ee30")
 	)
 	(junction
 		(at 139.7 158.75)
@@ -6764,6 +6776,16 @@
 			(type default)
 		)
 		(uuid "161fdfc9-6d04-43df-88ed-95830c2e1bcb")
+	)
+	(wire
+		(pts
+			(xy 63.5 41.91) (xy 63.5 43.18)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "16cd12b6-f91f-4074-b11e-9193a1e3392b")
 	)
 	(wire
 		(pts
@@ -7147,7 +7169,7 @@
 	)
 	(wire
 		(pts
-			(xy 22.86 22.86) (xy 22.86 26.67)
+			(xy 22.86 20.32) (xy 22.86 24.13)
 		)
 		(stroke
 			(width 0)
@@ -7227,6 +7249,16 @@
 	)
 	(wire
 		(pts
+			(xy 22.86 24.13) (xy 22.86 26.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "608fca25-7132-430b-a272-688d82d94c7e")
+	)
+	(wire
+		(pts
 			(xy 252.73 41.91) (xy 264.16 41.91)
 		)
 		(stroke
@@ -7267,7 +7299,7 @@
 	)
 	(wire
 		(pts
-			(xy 29.21 22.86) (xy 29.21 30.48)
+			(xy 29.21 20.32) (xy 29.21 30.48)
 		)
 		(stroke
 			(width 0)
@@ -8017,7 +8049,7 @@
 	)
 	(wire
 		(pts
-			(xy 63.5 40.64) (xy 63.5 43.18)
+			(xy 63.5 40.64) (xy 63.5 41.91)
 		)
 		(stroke
 			(width 0)
@@ -8587,7 +8619,7 @@
 	)
 	(symbol
 		(lib_id "power:VBUS")
-		(at 29.21 22.86 0)
+		(at 29.21 20.32 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -8598,7 +8630,7 @@
 		(fields_autoplaced yes)
 		(uuid "0e3c875f-cdd3-44d5-ba51-fd00af251fc0")
 		(property "Reference" "#PWR012"
-			(at 29.21 26.67 0)
+			(at 29.21 24.13 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8609,7 +8641,7 @@
 			)
 		)
 		(property "Value" "VBATT"
-			(at 29.21 17.78 0)
+			(at 29.21 15.24 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -8619,7 +8651,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 29.21 22.86 0)
+			(at 29.21 20.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8630,7 +8662,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 29.21 22.86 0)
+			(at 29.21 20.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8641,7 +8673,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VBUS\""
-			(at 29.21 22.86 0)
+			(at 29.21 20.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8658,6 +8690,84 @@
 			(project "curl_tracker"
 				(path "/93c49a84-1243-46d8-a3bd-0a1cca9fc84d"
 					(reference "#PWR012")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 22.86 24.13 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "135002ae-23de-4cb6-9f07-5be3429242c9")
+		(property "Reference" "#FLG02"
+			(at 20.955 24.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 22.606 21.844 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 22.86 24.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 22.86 24.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 22.86 24.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "97119dfa-d652-4108-bcdc-44941d86802e")
+		)
+		(instances
+			(project "curl_tracker"
+				(path "/93c49a84-1243-46d8-a3bd-0a1cca9fc84d"
+					(reference "#FLG02")
 					(unit 1)
 				)
 			)
@@ -8775,7 +8885,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 72.0852 170.18 0)
 			(hide yes)
 			(show_name no)
@@ -8855,7 +8965,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 33.02 27.94 0)
 			(hide yes)
 			(show_name no)
@@ -9831,7 +9941,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal"
 			(at 30.48 53.34 0)
 			(hide yes)
 			(show_name no)
@@ -10070,7 +10180,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 153.3652 31.75 0)
 			(hide yes)
 			(show_name no)
@@ -10151,7 +10261,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 25.0952 101.6 0)
 			(hide yes)
 			(show_name no)
@@ -10321,7 +10431,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 46.6852 101.6 0)
 			(hide yes)
 			(show_name no)
@@ -10785,7 +10895,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 22.86 22.86 0)
+		(at 22.86 20.32 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10796,7 +10906,7 @@
 		(fields_autoplaced yes)
 		(uuid "63e5b0c0-c7b3-4372-9fc4-138f988ab1f0")
 		(property "Reference" "#PWR013"
-			(at 22.86 26.67 0)
+			(at 22.86 24.13 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10807,7 +10917,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 22.86 17.78 0)
+			(at 22.86 15.24 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10817,7 +10927,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 22.86 22.86 0)
+			(at 22.86 20.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10828,7 +10938,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 22.86 22.86 0)
+			(at 22.86 20.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10839,7 +10949,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 22.86 22.86 0)
+			(at 22.86 20.32 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10972,7 +11082,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_USB:USB_C_Receptacle_GCT_USB4115-03-C"
 			(at 238.76 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -11199,7 +11309,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 107.6452 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -11358,7 +11468,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
 			(at 116.84 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -11517,7 +11627,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
 			(at 219.71 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -11677,7 +11787,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 223.012 133.35 90)
 			(hide yes)
 			(show_name no)
@@ -12073,7 +12183,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 50.4952 40.64 0)
 			(hide yes)
 			(show_name no)
@@ -12152,7 +12262,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal"
 			(at 118.11 147.32 0)
 			(hide yes)
 			(show_name no)
@@ -12388,7 +12498,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical"
 			(at 39.37 130.81 0)
 			(hide yes)
 			(show_name no)
@@ -12632,7 +12742,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 75.8952 40.64 0)
 			(hide yes)
 			(show_name no)
@@ -13262,7 +13372,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 65.7352 170.18 0)
 			(hide yes)
 			(show_name no)
@@ -13421,7 +13531,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Button_Switch_SMD:SW_SPST_TL3342"
 			(at 198.12 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -13580,7 +13690,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 147.0152 31.75 0)
 			(hide yes)
 			(show_name no)
@@ -14144,7 +14254,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LED_SMD:LED_0603_1608Metric"
 			(at 33.02 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -14532,6 +14642,84 @@
 		)
 	)
 	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 63.5 41.91 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "d96f4e28-fd34-4ebe-88e5-32e1b049010b")
+		(property "Reference" "#FLG03"
+			(at 61.595 41.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 61.722 43.942 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 63.5 41.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.5 41.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 63.5 41.91 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "6fc485a0-bead-4801-a439-b39323941164")
+		)
+		(instances
+			(project "curl_tracker"
+				(path "/93c49a84-1243-46d8-a3bd-0a1cca9fc84d"
+					(reference "#FLG03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 44.45 85.09 90)
 		(unit 1)
@@ -14800,7 +14988,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 43.18 35.56 0)
 			(hide yes)
 			(show_name no)
