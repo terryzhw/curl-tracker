@@ -17,6 +17,10 @@ Feedback is handled by the status LED for the device state, the OLED is display 
 
 ![schematic](curl_tracker.svg)
 
+###Design Choices: 
+
+- 
+
 
 ## Installation / Usage
 
