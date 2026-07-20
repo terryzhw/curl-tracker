@@ -71,8 +71,8 @@ void taskSampleIMU(void *pvParameters) {
 
       // Complementary filter; no yaw since not needed for bicep curls and no magnetometer to prevent drift
 
-      float accelRoll = atan2f(ay, az) * (180.0f / M_PI);
-      float accelPitch = atan2f(ax, sqrtf(sq(ay) + sq(az))) * (180.0f / M_PI);
+      float accelRoll = atan2f(ay, -az) * (180.0f / M_PI);
+      float accelPitch = atan2f(-ax, sqrtf(sq(ay) + sq(az))) * (180.0f / M_PI);
 
       if (!filterInitialized) {
         roll = accelRoll;
