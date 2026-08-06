@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/projdefs.h"
@@ -7,9 +8,10 @@
 #include "driver/ledc.h"
 #include "hal/ledc_types.h"
 #include "soc/clk_tree_defs.h"
+#include <esp_timer.h>
 
 
-#define LED_GPIO 3
+#define LED_GPIO 10
 #define BUTTON_GPIO 4
 
 #define PWM_MAX ((1<<13)-1)
@@ -30,6 +32,10 @@
 //     }
 // }
 
+uint32_t millis(void) {
+    return (uint32_t)(esp_timer_get_time() / 1000ULL);
+}
+
 void pollButton(void *pvParameters) {
     gpio_config_t button_config = {
         .pin_bit_mask = (1ULL << BUTTON_GPIO),
@@ -38,9 +44,13 @@ void pollButton(void *pvParameters) {
     };
     gpio_config(&button_config);
 
+    uint32_t now = millis();
+
     for(;;) {
-        if (gpio_get_level(BUTTON_GPIO) == 0) {
+        uint32_t curr = millis();
+        if ((gpio_get_level(BUTTON_GPIO) == 0) && ((curr - now) >= 150)) {
             printf("button pressed\n");
+            now = curr;
         }
         vTaskDelay(pdMS_TO_TICKS(50));
     }
