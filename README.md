@@ -1,4 +1,4 @@
-# Curl Tracker: Wearable Bicep Curl Coach (Work In Progress)
+# Curl Tracker: Wearable Bicep Curl Coach
 
 ## What is Curl Tracker?
 
@@ -11,9 +11,6 @@ Curl Tracker is a wearable bicep curl tracker that uses an ESP32-C3 Super Mini a
 
 ### Collecting:
 <img width="133" height="261" alt="image" src="https://github.com/user-attachments/assets/fa80ab4e-ff63-43aa-9450-e85a747db0ed" />
-
-### Working Video:
-
 
 ## Breadboard Prototype
 
